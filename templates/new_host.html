@@ -1,0 +1,20 @@
+<doctype html>
+<title>New Host - Sequans Host Database</title>
+<h2>New Host</h2>
+
+<form method=post>
+    <dl>
+        {{ form.name.label }}
+        {{ form.name }}
+        <br>
+        {{form.customer.label}}
+        {{form.customer}}
+        <br>
+        {{form.engineering.label}}
+        {{form.engineering}}
+        <br>
+        {{form.extra.label}}
+        {{form.extra}}
+    </dl>
+    <p><input type=submit value=Submit>
+</form>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sequans Board Ordering Form </title>
+<link rel ="stylesheet" media ="screen"  href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<link rel ="stylesheet" media = "screen" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}"
+<meta charset ="utf-8">
+<meta name="viewport" content = "width=device-width, initial-scale=1.0">
+</head>
+<body>
+<h1>Sequans Board Ordering Form</h1>
+<!--<a href="{{ url_for('.new_device') }}"> New Album </a>-->
+<form method ="POST" action = "{{url_for('form')}}" id="form-id" novalidate>
+    {{form.csrf_token}}
+    {{form.team.label}}
+    {{form.team}}
+    {% for error in form.team.errors %}
+  <ul>
+        <li style="color:red;">{{error}}</li>
+    {% endfor %}
+  </ul>
+  <br>
+  {{form.host.label}}
+  {{form.host}}
+  Click here for information about selected host:  <span id = "link"></span>.
+  {% for error in form.host.errors %}
+  <ul>
+        <li style="color:red;">{{error}}</li>
+    {% endfor %}
+  </ul>
+  <br>
+  {{form.quantity.label}}
+  {{form.quantity}}
+  {% for error in form.quantity.errors %}
+  <ul>
+        <li style="color:red;">{{error}}</li>
+    {% endfor %}
+  </ul>
+  <br>
+  {{form.finish.label}}
+  {{form.finish}}
+  {% for error in form.finish.errors %}
+  <ul>
+        <li style="color:red;">{{error}}</li>
+    {% endfor %}
+  </ul>
+  <br>
+  {{form.cat.label}}
+  {{form.cat}}
+  {% for error in form.cat.errors %}
+  <ul>
+        <li style="color:red;">{{error}}</li>
+    {% endfor %}
+  </ul>
+  <br>
+  {{form.device.label}}
+  {{form.device}}
+  {% for error in form.device.errors %}
+  <ul>
+        <li style="color:red;">{{error}}</li>
+    {% endfor %}
+  </ul>
+  <br>
+  {{form.number.label}}
+  {{form.number}}
+  {% for error in form.number.errors %}
+  <ul>
+        <li style="color:red;">{{error}}</li>
+    {% endfor %}
+  </ul>
+  <br>
+  <input type="submit" value="Submit">
+</form>
+<script>
+    document.getElementById('link').innerHTML = '- Link to Host specs -'
+    var cat_select = document.getElementById("cat");
+    var device_select = document.getElementById("device")
+    cat_select.onchange  = function() {
+        cat = cat_select.value;
+
+        fetch('/device/' + cat).then(function(response){
+            response.json().then(function(data){
+                var optionHTML='';
+                for(var device of data.devices){
+                    optionHTML += '<option value="' + device.id + '">' + device.name + '</option>';
+                }
+                device_select.innerHTML = optionHTML;
+            })
+        });
+    }
+</script>
+</body>
+</html>
